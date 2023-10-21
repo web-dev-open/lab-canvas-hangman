@@ -1,3 +1,15 @@
+/*  */
+
+h1{
+  margin: 20px 0 0;
+}
+.game-container{
+  padding: 20px 30px;
+  position: relative;
+  margin: auto;
+  height: 350px;
+  width: 450px;
+}
 .game-logo {
 
 }
@@ -14,4 +26,13 @@
 
 #hangman {
   text-align: center;
+  background-color: #fff;
+  border: 2px solid #000;
+  display: block;
+  margin: 20px auto;
+}
+
+canvas {
+  font-size: 20px;
+  color: #000;
 }
