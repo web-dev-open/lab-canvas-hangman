@@ -1,4 +1,11 @@
+body {
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+
 .game-logo {
+  max-width: 100%;
+  height: auto;
 
 }
 
@@ -12,6 +19,16 @@
   border-radius: 5px;
 }
 
+#start-game-button:hover {
+  background-color: #0056b3;
+}
+
+canvas {
+  border: 1px solid #000;
+  background-color: #fff;
+}
+
 #hangman {
   text-align: center;
+}
 }
