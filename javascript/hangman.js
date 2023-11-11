@@ -1,37 +1,52 @@
+
 class Hangman {
   constructor(words) {
     this.words = words;
-    // ... your code goes here
+    this.secretWord = this.pickWord();
+    this.letters = [];
+    this.guessedLetters = '';
+    this.errorsLeft = 10;
   }
 
   pickWord() {
-    // ... your code goes here
+    const randomIndex = Math.floor(Math.random() * this.words.length);
+    return this.words[randomIndex];
   }
 
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    return (keyCode >= 65 && keyCode <= 90); // ASCII codes for a-z
   }
 
   checkClickedLetters(letter) {
-    // ... your code goes here
+    return !this.letters.includes(letter);
   }
 
   addCorrectLetter(letter) {
-    // ... your code goes here
+    this.guessedLetters += letter;
+    if (this.checkWinner()) {
+      return true; // User won
+    }
+    return false; // User didn't win yet
   }
 
   addWrongLetter(letter) {
-    // ... your code goes here
+    if (!this.letters.includes(letter)) {
+      this.letters.push(letter);
+      this.errorsLeft--;
+    }
   }
 
   checkGameOver() {
-    // ... your code goes here
+    return this.errorsLeft <= 0;
   }
 
   checkWinner() {
-    // ... your code goes here
+    return this.secretWord.split('').every(letter => this.guessedLetters.includes(letter));
   }
 }
+
+// Example usage:
+const hangmanGame = new Hangman(['apple', 'banana', 'cherry']);
 
 let hangman;
 
@@ -53,3 +68,15 @@ document.addEventListener('keydown', event => {
   // React to user pressing a key
   // ... your code goes here
 });
+// Inside your Hangman game logic (in the 'hangman.js' file)
+
+// When the game is over (e.g., no errors left)
+if (hangmanCanvas.checkGameOver()) {
+  hangmanCanvas.gameOver();
+}
+
+// When the player wins
+if (hangmanCanvas.checkWinner()) {
+  hangmanCanvas.winner();
+}
+
