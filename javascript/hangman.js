@@ -1,3 +1,6 @@
+// Importing the canvas.js
+import { HangmanCanvas } from "./canvas.js";
+
 // *******************************
 // Iteration No. 1: The Game Logic
 // *******************************
@@ -73,7 +76,7 @@ class Hangman {
   addCorrectLetter(letter) {
     // ... your code goes here
     this.guessedLetters += letter;
-    return this.checkWinner;
+    return false;
   }
 
   /*
@@ -104,16 +107,20 @@ class Hangman {
     // ... your code goes here
     return this.secretWord
       .split("")
-      .every((letter) => this.guessedLetters.includes(this.letters));
+      .every((letter) => this.guessedLetters.includes(letter));
   }
 }
 
 let hangman;
 
+// Creating the variable to make this work
+let hangmanCanvas;
+
 const startGameButton = document.getElementById("start-game-button");
 
 if (startGameButton) {
   startGameButton.addEventListener("click", (event) => {
+    console.log("Button clicked");
     hangman = new Hangman([
       "node",
       "javascript",
@@ -127,8 +134,12 @@ if (startGameButton) {
     ]);
 
     // HINT (uncomment when start working on the canvas portion of the lab)
-    // hangman.secretWord = hangman.pickWord();
-    // hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+    hangman.secretWord = hangman.pickWord();
+    hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+
+    // Create the method to call the canvas
+    hangmanCanvas.createBoard();
+    console.log("If you see me it supposed to be the game Started.");
 
     // ... your code goes here
   });

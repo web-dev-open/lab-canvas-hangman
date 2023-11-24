@@ -1,13 +1,10 @@
 {
   "spec_dir": "spec",
   "spec_files": [
-    "**/*[sS]pec.?(m)js"
+    "**/*[sS]pec.js"
   ],
   "helpers": [
-    "helpers/**/*.?(m)js"
-  ],
-  "env": {
-    "stopSpecOnExpectationFailure": false,
-    "random": true
-  }
+    "path/to/your/javascript/hangman.js",
+    "path/to/your/javascript/canvas.js"
+  ]
 }
