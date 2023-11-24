@@ -1,0 +1,10 @@
+{
+  "spec_dir": "spec",
+  "spec_files": [
+    "**/*[sS]pec.js"
+  ],
+  "helpers": [
+    "path/to/your/javascript/hangman.js",
+    "path/to/your/javascript/canvas.js"
+  ]
+}
