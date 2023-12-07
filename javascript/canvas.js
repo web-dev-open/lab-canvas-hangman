@@ -1,131 +1,148 @@
 class HangmanCanvas {
-
   constructor(secretWord) {
-    this.ctx = document.getElementById('hangman').getContext('2d');
-    this.ctx.lineWidth = 4;
-    this.ctx.font = '40px arial';
-    this.secretWord = secretWord;
-    this.hangmanShape = ['base','pole','top','rope','head', 'body', 'leftLeg', 'rightLeg', 'leftArm', 'rightArm']
-
+    this.context = document.getElementById('hangman').getContext('2d');
+    // ... your code goes here
+    this.secretWord=secretWord;
   }
 
   createBoard() {
-
-    this.ctx.clearRect(0,0,1200, 700)
-    this.drawLines();
-
+    // ... your code goes here
+    this.context.clearRect(0,0,1200,800)
+    this.drawLines()
   }
-
+  writeHint(hint)
+  {
+    this.context.font='30px sans-serif'
+    this.context.fillText(`HINT  : ${hint}`,200,50)
+  }
   drawLines() {
-
-    const x = 300;
-
-    for (let i = 0; i < this.secretWord.length; i++) {
-      this.ctx.beginPath();
-      this.ctx.moveTo(x + i * 52, 600 );
-      this.ctx.lineTo(x + i * 52 + 40, 600);
-      this.ctx.stroke();
-
+    // ... your code goes here
+    let k=180;
+    for(let i=1;i<=this.secretWord.length;i++)
+    {
+      this.context.beginPath();
+      k+=20;
+      this.context.moveTo(k,700);
+      this.context.lineWidth=5;
+      k+=60;
+      this.context.lineTo(k,700);
+      this.context.stroke();
     }
   }
 
   writeCorrectLetter(index) {
-
-    const x = 300 + index * 50;
-  
-    this.ctx.fillText(this.secretWord[index], x, 600);
+    // ... your code goes here
+    let letter=this.secretWord[index]
+    this.context.font='40px monospace'
+    let x=220+(20+60)*index;
+    this.context.fillText(letter,x,680)
   }
 
   writeWrongLetter(letter, errorsLeft) {
-
-    const x = 1100 + (10 - errorsLeft) * 40;
-    this.ctx.fillText(letter, x, 200);
+    // ... your code goes here
+    let k=700;       //extra space from left side 
+    this.context.font='40px monospace'
+    k+=(30*(10-errorsLeft))
+    this.context.fillText(letter.toUpperCase(),k,200)
   }
 
-  drawHangman(shape) {
-
-    switch (shape) {
-      case 'bottom':
-        this.ctx.beginPath();
-        this.ctx.moveTo(150, 500);
-        this.ctx.lineTo(250, 500);
-        this.ctx.stroke();
-        break;
-      case 'pole':
-        this.ctx.beginPath();
-        this.ctx.moveTo(150, 500);
-        this.ctx.lineTo(200, 100);
-        this.ctx.stroke();
-        break;
-      case 'top':
-        this.ctx.beginPath();
-        this.ctx.moveTo(200, 100);
-        this.ctx.lineTo(400, 100);
-        this.ctx.stroke();
-        break;
-      case 'rope':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 100);
-        this.ctx.lineTo(400, 160);
-        this.ctx.stroke();
-        break;
-      case 'head':
-        this.ctx.beginPath();
-        this.ctx.arc(400, 190, 30, 0, Math.PI * 2);
-        this.ctx.stroke();
-        break;
-      case 'body':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 200);
-        this.ctx.lineTo(400, 350);
-        this.ctx.stroke();
-        break;
-      case 'leftArm':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 200);
-        this.ctx.lineTo(350, 270);
-        this.ctx.stroke();
-        break;
-      case 'rightArm':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 200);
-        this.ctx.lineTo(450, 270);
-        this.ctx.stroke();
-        break;
-      case 'leftLeg':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 350);
-        this.ctx.lineTo(350, 400);
-        this.ctx.stroke();
-        break;
-      case 'rightLeg':
-        this.ctx.beginPath();
-        this.ctx.moveTo(400, 350);
-        this.ctx.lineTo(450, 400);
-        this.ctx.stroke();
-        break;
+  drawHangman(errorsLeft) {
+    // ... your code goes here
+    if(errorsLeft==9)
+    {
+      this.context.beginPath();
+      this.context.moveTo(50,700)
+      this.context.lineTo(150,700)
+      this.context.stroke();
     }
+    else if(errorsLeft==8)
+    {
+      this.context.beginPath();
+      this.context.moveTo(50,700)
+      this.context.lineTo(100,630)
+      this.context.stroke();
+    }
+    else if(errorsLeft==7)
+    {
+      this.context.beginPath();
+      this.context.moveTo(150,700)
+      this.context.lineTo(100,630)
+      this.context.stroke();
+    }
+    else if(errorsLeft==6)
+    {
+      this.context.beginPath();
+      this.context.moveTo(100,630)
+      this.context.lineTo(100,100)
+      this.context.stroke();
+    }
+    else if(errorsLeft==5)
+    {
+      this.context.beginPath();
+      this.context.moveTo(100,100)
+      this.context.lineTo(400,100)
+      this.context.stroke();
+    }
+    else if(errorsLeft==4)
+    {
+      this.context.beginPath();
+      this.context.moveTo(400,100)
+      this.context.lineTo(400,160)
+      this.context.stroke();
+    }
+    else if(errorsLeft==3)
+    {
+      this.context.beginPath();
+      this.context.arc(400,210,50,0,(Math.PI/180)*360)
+      this.context.stroke();
+      this.context.closePath();
+    }
+    else if(errorsLeft==2)
+    {
+      this.context.beginPath()
+      this.context.moveTo(400,260)
+      this.context.lineTo(400,300)
+      this.context.stroke();
+    }
+    else if(errorsLeft==1)
+    {
+      this.context.beginPath();
+      this.context.moveTo(400,260)
+      this.context.lineTo(400,400)
+      this.context.stroke();
+    }
+    else if(errorsLeft==0)
+    {
+      this.context.beginPath();
+      this.context.moveTo(400,400)
+      this.context.lineTo(340,500)
+      this.context.stroke();
+    }
+    else     //game over
+    {
+      this.context.beginPath();
+      this.context.moveTo(400,400)
+      this.context.lineTo(460,500)
+      this.context.stroke();
+    }
+    
   }
 
   gameOver() {
-
-    this.ctx.clearRect(0, 0, 1200, 700);
-    const gameOverimg = new Image();
-    this.gameOverimg.src = './images/gameover.png';
-    this.gameOverimg.onload = () => {
-      this.ctx.drawImage(gameOverimg, 300, 200);
-    };
-
+    // ... your code goes here
+    const over = new Image();
+    over.src = "images/gameover.png";
+    over.onload = () => {
+    this.context.drawImage(over, 500,250);
+};
   }
 
   winner() {
-
-    this.ctx.clearRect(0, 0, 1200, 700);
-    const winnerimg = new Image();
-    winnerimg.src = './images/awesome.png';
-    winnerimg.onload = () => {
-      this.ctx.drawImage(winnerimg, 300, 200);
-    };
-
+    // ... your code goes here
+    const awesome=new Image();
+    awesome.src='images/awesome.png'
+    awesome.onload=()=>{
+    this.context.drawImage(awesome,300,60);
   }
+}
 }
