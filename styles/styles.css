@@ -1,5 +1,6 @@
 .game-logo {
-
+  width: 450px;
+  height: 200px;
 }
 
 #start-game-button {
@@ -13,5 +14,7 @@
 }
 
 #hangman {
-  text-align: center;
+  text-align: left;
+  position: absolute;
+  left: 0;
 }
