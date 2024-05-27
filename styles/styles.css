@@ -10,6 +10,13 @@
   padding: 20px 40px;
   font-size: 30px;
   border-radius: 5px;
+  border: 0;
+  box-shadow: 0;
+  background: linear-gradient(to bottom, #9DA400, #BAC600);
+  color: #fff;
+  padding: 20px 40px;
+  font-size: 30px;
+  border-radius: 5px;
 }
 
 #hangman {
