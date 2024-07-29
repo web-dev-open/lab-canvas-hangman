@@ -1,55 +1,88 @@
+// The Hangman class created by Nathan Chan is responsible for creating the game logic. 
+
 class Hangman {
   constructor(words) {
     this.words = words;
-    // ... your code goes here
+    this.secretWord = this.pickWord();
+    this.letters = [];
+    this.guessedLetters = '';
+    this.errorsLeft = 10;
   }
 
   pickWord() {
-    // ... your code goes here
+    return this.words[Math.floor(Math.random() * this.words.length)];
   }
 
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    return keyCode >= 65 && keyCode <= 90;
   }
 
   checkClickedLetters(letter) {
-    // ... your code goes here
+    return !this.letters.includes(letter);
   }
 
   addCorrectLetter(letter) {
-    // ... your code goes here
+    this.guessedLetters += letter;
+    return this.checkWinner();
   }
 
   addWrongLetter(letter) {
-    // ... your code goes here
+    this.errorsLeft--;
+    this.letters.push(letter);
   }
 
   checkGameOver() {
-    // ... your code goes here
+    return this.errorsLeft <= 0;
   }
 
+  
   checkWinner() {
-    // ... your code goes here
+    return this.secretWord.split('').every(letter => this.guessedLetters.includes(letter));
   }
 }
 
 let hangman;
+let hangmanCanvas;
 
-const startGameButton = document.getElementById('start-game-button');
+document.addEventListener('DOMContentLoaded', () => {
+  const startGameButton = document.getElementById('start-game-button');
 
-if (startGameButton) {
-  startGameButton.addEventListener('click', event => {
-    hangman = new Hangman(['node', 'javascript', 'react', 'miami', 'paris', 'amsterdam', 'lisboa']);
-
-    // HINT (uncomment when start working on the canvas portion of the lab)
-    // hangman.secretWord = hangman.pickWord();
-    // hangmanCanvas = new HangmanCanvas(hangman.secretWord);
-
-    // ... your code goes here
-  });
-}
+  if (startGameButton) {
+    startGameButton.addEventListener('click', () => {
+      hangman = new Hangman(['node', 'javascript', 'react', 'miami', 'paris', 'amsterdam', 'lisboa']);
+      hangman.secretWord = hangman.pickWord();
+      hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+      hangmanCanvas.createBoard();
+    });
+  }
+});
 
 document.addEventListener('keydown', event => {
-  // React to user pressing a key
-  // ... your code goes here
+  if (!hangmanCanvas) return; // Ensure the canvas is initialized
+
+  const letter = event.key.toLowerCase();
+
+  if (hangman.checkIfLetter(event.keyCode)) {
+    if (hangman.checkClickedLetters(letter)) {
+      if (hangman.secretWord.includes(letter)) {
+        hangman.secretWord.split('').forEach((char, index) => {
+          if (char === letter) {
+            hangmanCanvas.writeCorrectLetter(index);
+          }
+        });
+
+        if (hangman.addCorrectLetter(letter)) {
+          hangmanCanvas.winner();
+        }
+      } else {
+        hangman.addWrongLetter(letter);
+        hangmanCanvas.writeWrongLetter(letter, hangman.errorsLeft);
+        hangmanCanvas.drawHangman(hangman.errorsLeft);
+
+        if (hangman.checkGameOver()) {
+          hangmanCanvas.gameOver();
+        }
+      }
+    }
+  }
 });
