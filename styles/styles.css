@@ -1,5 +1,6 @@
 .game-logo {
-
+  max-width: 100%;
+  height: auto;
 }
 
 #start-game-button {
@@ -10,8 +11,10 @@
   padding: 20px 40px;
   font-size: 30px;
   border-radius: 5px;
+  cursor: pointer;
 }
 
 #hangman {
-  text-align: center;
+  display: block;
+  margin: 0 auto;
 }
