@@ -1,3 +1,12 @@
+/**
+ * @jest-environment jsdom
+ */
+const { JSDOM } = require('jsdom');
+
+const dom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`);
+global.window = dom.window;
+global.document = dom.window.document;
+
 // window.jasmine.getEnv().randomizeTests(false);
 window.jasmine.getEnv().configure({
   random: false
