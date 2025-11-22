@@ -38,8 +38,9 @@ class Hangman {
     this.errorLeft -= 1;
   }
 
+  // If no errors left -> game over
   checkGameOver() {
-    // ... your code goes here
+    return this.errorsLeft <= 0;
   }
 
   checkWinner() {
