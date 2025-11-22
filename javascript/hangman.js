@@ -8,7 +8,8 @@ class Hangman {
   }
 
   pickWord() {
-
+    const randIndex = Math.floor(Math.random() * this.words.length);
+    return this.words[randIndex];
   }
 
   checkIfLetter(keyCode) {
