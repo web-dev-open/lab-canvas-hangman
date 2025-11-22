@@ -18,8 +18,9 @@ class Hangman {
     return keyCode >= 65 && keyCode <= 90;
   }
 
+  // Check if letter was already clicked (true means NOT clicked yet)
   checkClickedLetters(letter) {
-    // ... your code goes here
+    return !this.letters.includes(letter);
   }
 
   addCorrectLetter(letter) {
