@@ -43,8 +43,14 @@ class Hangman {
     return this.errorsLeft <= 0;
   }
 
+  // Player wins if guessedLetters contains all letters of secretWord
   checkWinner() {
-    // ... your code goes here
+    for (let char of this.secretWord) {
+      if (!this.guessedLetters.includes(char)) {
+        return false;
+      }
+    }
+    return true;
   }
 }
 
