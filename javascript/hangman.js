@@ -1,3 +1,8 @@
+let hangman;
+let hangmanCanvas;
+
+const startGameButton = document.getElementById('start-game-button');
+
 class Hangman {
   constructor(words) {
     this.words = words;
@@ -8,8 +13,7 @@ class Hangman {
   }
 
   pickWord() {
-    const randIndex = Math.floor(Math.random() * this.words.length);
-    return this.words[randIndex];
+    return this.words[Math.floor(Math.random() * this.words.length)];
   }
 
   checkIfLetter(keyCode) {
@@ -21,15 +25,14 @@ class Hangman {
   }
 
   addCorrectLetter(letter) {
+    if (!this.letters.includes(letter)) this.letters.push(letter);
     this.guessedLetters += letter;
     return this.checkWinner();
   }
 
   addWrongLetter(letter) {
-    if (!this.letters.includes(letter)) {
-      this.letters.push(letter);
-    }
-    this.errorsLeft -= 1;   // FIXED
+    if (!this.letters.includes(letter)) this.letters.push(letter);
+    this.errorsLeft -= 1;
   }
 
   checkGameOver() {
@@ -37,60 +40,41 @@ class Hangman {
   }
 
   checkWinner() {
-    for (let char of this.secretWord) {
-      if (!this.guessedLetters.includes(char)) {
-        return false;
-      }
-    }
-    return true;
+    return [...this.secretWord].every(char => this.guessedLetters.includes(char));
   }
 }
 
-startGameButton.addEventListener('click', event => {
-  hangman = new Hangman([
-    'node',
-    'javascript',
-    'react',
-    'miami',
-    'paris',
-    'amsterdam',
-    'lisboa'
-  ]);
+// START BUTTON
+if (startGameButton) {
+  startGameButton.addEventListener('click', () => {
+    hangman = new Hangman([
+      'node','javascript','react','miami','paris','amsterdam','lisboa'
+    ]);
+    hangman.secretWord = hangman.pickWord();
+    hangmanCanvas = new HangmanCanvas(hangman.secretWord);
+    hangmanCanvas.createBoard();
+  });
+}
 
-  hangman.secretWord = hangman.pickWord();
-  hangmanCanvas = new HangmanCanvas(hangman.secretWord);
-  hangmanCanvas.createBoard();
-});
-
-document.addEventListener('keydown', event => {
-  if (!hangman) return; // game not started
+// KEYDOWN HANDLER
+document.addEventListener('keydown', (event) => {
+  if (!hangman) return;
 
   const letter = event.key.toLowerCase();
 
   if (!hangman.checkIfLetter(event.keyCode)) return;
-
   if (!hangman.checkClickedLetters(letter)) return;
-
-  hangman.letters.push(letter);
 
   if (hangman.secretWord.includes(letter)) {
     hangman.addCorrectLetter(letter);
-
     [...hangman.secretWord].forEach((char, idx) => {
       if (char === letter) hangmanCanvas.writeCorrectLetter(idx);
     });
-
-    if (hangman.checkWinner()) {
-      hangmanCanvas.winner();
-    }
+    if (hangman.checkWinner()) hangmanCanvas.winner();
   } else {
     hangman.addWrongLetter(letter);
-
     hangmanCanvas.writeWrongLetter(letter, hangman.errorsLeft);
     hangmanCanvas.drawHangman(hangman.errorsLeft);
-
-    if (hangman.checkGameOver()) {
-      hangmanCanvas.gameOver();
-    }
+    if (hangman.checkGameOver()) hangmanCanvas.gameOver();
   }
 });
