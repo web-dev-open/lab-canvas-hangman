@@ -7,13 +7,15 @@ class Hangman {
     this.errorsLeft = 10; // Errors allowed
   }
 
+  // Return randomly selected word from the words array
   pickWord() {
     const randIndex = Math.floor(Math.random() * this.words.length);
     return this.words[randIndex];
   }
 
+  // Check if keyCode is A-Z
   checkIfLetter(keyCode) {
-    // ... your code goes here
+    return keyCode >= 65 && keyCode <= 90;
   }
 
   checkClickedLetters(letter) {
