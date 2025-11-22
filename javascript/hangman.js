@@ -23,8 +23,11 @@ class Hangman {
     return !this.letters.includes(letter);
   }
 
+  // Add correct letter to guessedLetters
   addCorrectLetter(letter) {
-    // ... your code goes here
+    this.guessedLetters += letter;
+    // Check if player has guessed all the letters (win condition)
+    return this.checkWinner();
   }
 
   addWrongLetter(letter) {
