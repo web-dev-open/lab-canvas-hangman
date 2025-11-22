@@ -30,8 +30,12 @@ class Hangman {
     return this.checkWinner();
   }
 
+  // Add wrong letter and reduce errors
   addWrongLetter(letter) {
-    // ... your code goes here
+    if(!this.letters.includes(letter)) {
+      this.letters.push(letter); //store tried letters
+    }
+    this.errorLeft -= 1;
   }
 
   checkGameOver() {
